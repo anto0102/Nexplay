@@ -1,4 +1,4 @@
-import { Movie, TVShow, MovieDetails, TVShowDetails, Credits, Video, TMDBResponse, Genre } from './types';
+import { Movie, TVShow, MovieDetails, TVShowDetails, Credits, Video, TMDBResponse, Genre, SearchResultItem } from './types';
 
 const TMDB_API_KEY = '2d082597ab951b3a9596ca23e71413a8';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
@@ -64,7 +64,7 @@ async function fetchFromTMDB<T>(endpoint: string): Promise<T> {
 }
 
 // Mock data function for fallback
-function getMockData(endpoint: string): any {
+function getMockData(endpoint: string): unknown {
   const mockMovie = {
     id: 1,
     title: 'Film di Esempio',
@@ -237,7 +237,7 @@ export async function discoverTVShows(params: {
 }
 
 // Search multi function
-export async function searchMulti(query: string): Promise<TMDBResponse<any>> {
+export async function searchMulti(query: string): Promise<TMDBResponse<SearchResultItem>> {
   const encodedQuery = encodeURIComponent(query);
   return fetchFromTMDB(`/search/multi?query=${encodedQuery}`);
 }

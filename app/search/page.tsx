@@ -27,14 +27,14 @@ async function SearchResults({ query }: { query: string }) {
   try {
     const searchResults = await searchMulti(query);
 
-    const movies = searchResults.results.filter((item: any) => item.media_type === 'movie');
-    const tvShows = searchResults.results.filter((item: any) => item.media_type === 'tv');
+    const movies = searchResults.results.filter(item => item.media_type === 'movie');
+    const tvShows = searchResults.results.filter(item => item.media_type === 'tv');
 
     return (
       <div className="bg-black min-h-screen pt-32 pb-20">
         <div className="container mx-auto px-4 md:px-8 lg:px-16 mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">
-            Risultati per "{query}"
+            Risultati per &quot;{query}&quot;
           </h1>
           <p className="text-white/70 text-lg">
             {searchResults.total_results} risultati trovati

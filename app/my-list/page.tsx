@@ -42,7 +42,7 @@ export default function MyListPage() {
 
                   <div className="flex items-center justify-center gap-2 text-white/60">
                     <Plus className="w-4 h-4" />
-                    <span className="text-sm">Clicca il pulsante "+" sui contenuti per aggiungerli qui</span>
+                    <span className="text-sm">Clicca il pulsante &quot;+&quot; sui contenuti per aggiungerli qui</span>
                   </div>
                 </div>
               </Card>

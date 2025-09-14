@@ -10,14 +10,15 @@ import { Dialog, DialogContent, VisuallyHidden, DialogTitle } from '@/components
 import { useMyList } from '@/contexts/my-list-context';
 import { Play, Plus, Check, Info, VolumeX, Volume2 } from 'lucide-react';
 import { getImageUrl, getBackdropUrl } from '@/lib/tmdb';
+import type { TVShowDetails, Credits, VideosResponse } from '@/lib/types';
 
 interface TVShowDetailsClientProps {
-  tvDetails: any;
-  credits: any;
-  videos: any;
+  tvDetails: TVShowDetails;
+  credits: Credits;
+  videos: VideosResponse;
 }
 
-export function TVShowDetailsClient({ tvDetails, credits, videos }: TVShowDetailsClientProps) {
+export function TVShowDetailsClient({ tvDetails, credits }: TVShowDetailsClientProps) {
   const { addToList, removeFromList, isInList } = useMyList();
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
@@ -25,9 +26,6 @@ export function TVShowDetailsClient({ tvDetails, credits, videos }: TVShowDetail
   const [showInfo, setShowInfo] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  const trailer = videos?.results.find((video: any) =>
-    video.type === 'Trailer' && video.site === 'YouTube'
-  );
 
   const inMyList = isInList(tvDetails.id, 'tv');
 
@@ -96,11 +94,11 @@ export function TVShowDetailsClient({ tvDetails, credits, videos }: TVShowDetail
 
               {/* Genres */}
               <div className="flex flex-wrap gap-2">
-                {tvDetails.genres.slice(0, 3).map((genre: any) => (
+                {tvDetails.genres.slice(0, 3).map((genre) => (
                   <span key={genre.id} className="text-white/80">
                     {genre.name}
                   </span>
-                )).reduce((acc: any, curr: any, i: number, arr: any[]) => {
+                )).reduce((acc: React.ReactNode[], curr: React.ReactNode, i: number, arr: React.ReactNode[]) => {
                   return i < arr.length - 1 ? [...acc, curr, <span key={`sep-${i}`} className="text-white/60">•</span>] : [...acc, curr];
                 }, [])}
               </div>
@@ -176,7 +174,6 @@ export function TVShowDetailsClient({ tvDetails, credits, videos }: TVShowDetail
             seasons={tvDetails.seasons}
             onEpisodeSelect={handleEpisodeSelect}
             selectedSeason={selectedSeason}
-            selectedEpisode={selectedEpisode}
           />
         </div>
       </div>
@@ -187,7 +184,7 @@ export function TVShowDetailsClient({ tvDetails, credits, videos }: TVShowDetail
           <div className="container mx-auto px-4 md:px-8 lg:px-16">
             <h2 className="text-2xl font-bold text-white mb-8">Cast</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-              {credits.cast.slice(0, 12).map((actor: any) => (
+              {credits.cast.slice(0, 12).map((actor) => (
                 <div key={actor.id} className="text-center">
                   <div className="aspect-square bg-gray-800 rounded-lg overflow-hidden mb-3">
                     <Image
@@ -258,7 +255,7 @@ export function TVShowDetailsClient({ tvDetails, credits, videos }: TVShowDetail
               <div>
                 <span className="text-white/60">Generi: </span>
                 <span className="text-white">
-                  {tvDetails.genres.map((g: any) => g.name).join(', ')}
+                  {tvDetails.genres.map((g) => g.name).join(', ')}
                 </span>
               </div>
 

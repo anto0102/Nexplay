@@ -8,26 +8,16 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { searchMulti, getImageUrl } from '@/lib/tmdb';
+import type { SearchResultItem } from '@/lib/types';
 
 interface SearchBarProps {
   className?: string;
 }
 
-interface SearchResult {
-  id: number;
-  title?: string;
-  name?: string;
-  media_type: 'movie' | 'tv' | 'person';
-  poster_path?: string;
-  profile_path?: string;
-  release_date?: string;
-  first_air_date?: string;
-  overview?: string;
-}
 
 export function SearchBar({ className = '' }: SearchBarProps) {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
+  const [results, setResults] = useState<SearchResultItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -51,7 +41,7 @@ export function SearchBar({ className = '' }: SearchBarProps) {
         if (searchResults && searchResults.results && Array.isArray(searchResults.results)) {
           // Filter out people and limit to 8 results
           const filteredResults = searchResults.results
-            .filter((item: any) => item.media_type !== 'person')
+            .filter((item) => item.media_type !== 'person')
             .slice(0, 8);
           setResults(filteredResults);
           setShowResults(true);
@@ -98,18 +88,18 @@ export function SearchBar({ className = '' }: SearchBarProps) {
     }
   };
 
-  const handleResultClick = (result: SearchResult) => {
+  const handleResultClick = (result: SearchResultItem) => {
     const url = result.media_type === 'movie' ? `/movie/${result.id}` : `/tv/${result.id}`;
     router.push(url);
     setShowResults(false);
     setQuery('');
   };
 
-  const getTitle = (result: SearchResult) => {
+  const getTitle = (result: SearchResultItem) => {
     return result.title || result.name || 'Senza titolo';
   };
 
-  const getYear = (result: SearchResult) => {
+  const getYear = (result: SearchResultItem) => {
     const date = result.release_date || result.first_air_date;
     return date ? new Date(date).getFullYear() : '';
   };
@@ -171,7 +161,7 @@ export function SearchBar({ className = '' }: SearchBarProps) {
                 >
                   <div className="flex-shrink-0 w-12 h-16 rounded overflow-hidden bg-gray-800">
                     <Image
-                      src={getImageUrl(result.poster_path || result.profile_path, 'w154')}
+                      src={getImageUrl(result.poster_path || result.profile_path || null, 'w154')}
                       alt={getTitle(result)}
                       width={48}
                       height={64}
@@ -213,7 +203,7 @@ export function SearchBar({ className = '' }: SearchBarProps) {
                     onClick={() => handleSearch()}
                   >
                     <Search className="h-4 w-4 mr-2" />
-                    Visualizza tutti i risultati per "{query}"
+                    Visualizza tutti i risultati per &quot;{query}&quot;
                   </Button>
                 </div>
               )}

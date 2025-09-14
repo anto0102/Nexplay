@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Movie, TVShow } from '@/lib/tmdb';
+import type { Movie, TVShow } from '@/lib/types';
 
 type ListItem = {
   id: number;

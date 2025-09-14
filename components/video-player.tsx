@@ -138,7 +138,7 @@ export function VideoPlayer({ tmdbId, type, season, episode }: VideoPlayerProps)
         />
       </div>
     );
-  } catch (error) {
+  } catch {
     return (
       <div className="w-full h-full min-h-[60vh] bg-black rounded-lg flex items-center justify-center">
         <div className="text-center space-y-4">

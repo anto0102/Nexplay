@@ -9,22 +9,20 @@ import { Dialog, DialogContent, VisuallyHidden, DialogTitle } from '@/components
 import { useMyList } from '@/contexts/my-list-context';
 import { Play, Plus, Check, Info, VolumeX, Volume2 } from 'lucide-react';
 import { getImageUrl, getBackdropUrl } from '@/lib/tmdb';
+import type { MovieDetails, Credits, VideosResponse } from '@/lib/types';
 
 interface MovieDetailsClientProps {
-  movieDetails: any;
-  credits: any;
-  videos: any;
+  movieDetails: MovieDetails;
+  credits: Credits;
+  videos: VideosResponse;
 }
 
-export function MovieDetailsClient({ movieDetails, credits, videos }: MovieDetailsClientProps) {
+export function MovieDetailsClient({ movieDetails, credits }: MovieDetailsClientProps) {
   const { addToList, removeFromList, isInList } = useMyList();
   const [showPlayer, setShowPlayer] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  const trailer = videos?.results.find((video: any) =>
-    video.type === 'Trailer' && video.site === 'YouTube'
-  );
 
   const inMyList = isInList(movieDetails.id, 'movie');
 
@@ -87,11 +85,11 @@ export function MovieDetailsClient({ movieDetails, credits, videos }: MovieDetai
 
               {/* Genres */}
               <div className="flex flex-wrap gap-2">
-                {movieDetails.genres.slice(0, 3).map((genre: any) => (
+                {movieDetails.genres.slice(0, 3).map((genre) => (
                   <span key={genre.id} className="text-white/80">
                     {genre.name}
                   </span>
-                )).reduce((acc: any, curr: any, i: number, arr: any[]) => {
+                )).reduce((acc: React.ReactNode[], curr: React.ReactNode, i: number, arr: React.ReactNode[]) => {
                   return i < arr.length - 1 ? [...acc, curr, <span key={`sep-${i}`} className="text-white/60">•</span>] : [...acc, curr];
                 }, [])}
               </div>
@@ -164,7 +162,7 @@ export function MovieDetailsClient({ movieDetails, credits, videos }: MovieDetai
           <div className="container mx-auto px-4 md:px-8 lg:px-16">
             <h2 className="text-2xl font-bold text-white mb-8">Cast</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-              {credits.cast.slice(0, 12).map((actor: any) => (
+              {credits.cast.slice(0, 12).map((actor) => (
                 <div key={actor.id} className="text-center">
                   <div className="aspect-square bg-gray-800 rounded-lg overflow-hidden mb-3">
                     <Image
@@ -233,7 +231,7 @@ export function MovieDetailsClient({ movieDetails, credits, videos }: MovieDetai
               <div>
                 <span className="text-white/60">Generi: </span>
                 <span className="text-white">
-                  {movieDetails.genres.map((g: any) => g.name).join(', ')}
+                  {movieDetails.genres.map((g) => g.name).join(', ')}
                 </span>
               </div>
 

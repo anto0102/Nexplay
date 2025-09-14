@@ -8,16 +8,17 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useMyList } from '@/contexts/my-list-context';
-import { Movie, TVShow, getImageUrl } from '@/lib/tmdb';
+import { getImageUrl } from '@/lib/tmdb';
+import type { Movie, TVShow, SearchResultItem } from '@/lib/types';
 
 interface MovieRowProps {
   title: string;
-  items: (Movie | TVShow)[];
+  items: (Movie | TVShow | SearchResultItem)[];
   type: 'movie' | 'tv';
 }
 
 interface MovieCardProps {
-  item: Movie | TVShow;
+  item: Movie | TVShow | SearchResultItem;
   type: 'movie' | 'tv';
 }
 
@@ -39,7 +40,7 @@ function MovieCard({ item, type }: MovieCardProps) {
     if (inMyList) {
       removeFromList(item.id, type);
     } else {
-      addToList(item, type);
+      addToList(item as Movie | TVShow, type);
     }
   };
 

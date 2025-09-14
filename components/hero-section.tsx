@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Play, Info, Volume2, VolumeX, Star } from 'lucide-react';
-import { Movie, getImageUrl, getBackdropUrl } from '@/lib/tmdb';
+import { Play, Info, Volume2, VolumeX } from 'lucide-react';
+import { getBackdropUrl } from '@/lib/tmdb';
+import type { Movie } from '@/lib/types';
 
 interface HeroSectionProps {
   movie: Movie;
@@ -14,18 +15,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ movie }: HeroSectionProps) {
   const [isMuted, setIsMuted] = useState(true);
-  const [isVisible, setIsVisible] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(false), 10000);
-    const loadTimer = setTimeout(() => setIsLoaded(true), 100);
-
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(loadTimer);
-    };
-  }, []);
 
   const backdropUrl = getBackdropUrl(movie.backdrop_path, 'original');
 
@@ -40,7 +30,6 @@ export function HeroSection({ movie }: HeroSectionProps) {
           className="object-cover"
           priority
           sizes="100vw"
-          onLoadingComplete={() => setIsLoaded(true)}
         />
 
         {/* Simplified gradients */}

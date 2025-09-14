@@ -3,8 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { getImageUrl } from '@/lib/tmdb';
 
@@ -24,7 +22,7 @@ interface Season {
   season_number: number;
   episode_count: number;
   air_date: string;
-  poster_path: string;
+  poster_path: string | null;
   overview: string;
 }
 
@@ -33,7 +31,6 @@ interface EpisodeCarouselProps {
   seasons: Season[];
   onEpisodeSelect: (season: number, episode: number) => void;
   selectedSeason?: number;
-  selectedEpisode?: number;
 }
 
 export function EpisodeCarousel({
@@ -41,7 +38,6 @@ export function EpisodeCarousel({
   seasons,
   onEpisodeSelect,
   selectedSeason = 1,
-  selectedEpisode = 1
 }: EpisodeCarouselProps) {
   const [currentSeason, setCurrentSeason] = useState(selectedSeason);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
@@ -50,30 +46,29 @@ export function EpisodeCarousel({
 
   const availableSeasons = seasons.filter(season => season.season_number > 0);
 
+
   useEffect(() => {
-    fetchEpisodes(currentSeason);
-  }, [currentSeason, tvId]);
+    const fetchEpisodesEffect = async (seasonNumber: number) => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}?api_key=2d082597ab951b3a9596ca23e71413a8&language=it-IT`
+        );
 
-  const fetchEpisodes = async (seasonNumber: number) => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}?api_key=2d082597ab951b3a9596ca23e71413a8&language=it-IT`
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch episodes');
+        if (response.ok) {
+          const data = await response.json();
+          setEpisodes(data.episodes || []);
+        }
+      } catch (error) {
+        console.error('Error fetching episodes:', error);
+        setEpisodes([]);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await response.json();
-      setEpisodes(data.episodes || []);
-    } catch (err) {
-      console.error('Error fetching episodes:', err);
-      setEpisodes([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchEpisodesEffect(currentSeason);
+  }, [currentSeason, tvId]);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {

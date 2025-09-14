@@ -131,3 +131,22 @@ export interface TMDBResponse<T> {
   total_pages: number;
   total_results: number;
 }
+
+export interface VideosResponse {
+  id?: number;
+  results: Video[];
+}
+
+export interface SearchResultItem {
+  id: number;
+  media_type: 'movie' | 'tv' | 'person';
+  title?: string;
+  name?: string;
+  overview: string;
+  poster_path: string | null;
+  profile_path?: string | null;
+  backdrop_path: string | null;
+  release_date?: string;
+  first_air_date?: string;
+  vote_average: number;
+}
