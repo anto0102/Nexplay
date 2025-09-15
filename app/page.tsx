@@ -2,8 +2,8 @@ import { Navbar } from '@/components/navbar';
 import { HeroSection } from '@/components/hero-section';
 import { MovieRow } from '@/components/movie-row';
 
-// Enable static generation for better performance
-export const revalidate = 3600; // Revalidate every hour
+// Force dynamic rendering to ensure fresh content on every refresh
+export const dynamic = 'force-dynamic';
 
 // Shuffle function for randomizing content order
 function shuffleArray<T>(array: T[]): T[] {
