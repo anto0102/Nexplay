@@ -1,7 +1,6 @@
 import { Navbar } from '@/components/navbar';
 import { HeroSection } from '@/components/hero-section';
 import { MovieRow } from '@/components/movie-row';
-import { AutoRefresh } from '@/components/auto-refresh';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -51,23 +50,20 @@ export default async function Home() {
     const shuffledPopularTVShows = shuffleArray(popularTVShows.results);
     const shuffledTopRatedTVShows = shuffleArray(topRatedTVShows.results);
 
-    // Get hero movie based on current time (changes every 10 seconds)
+    // Get hero movies and initial index based on current time
     const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
     const intervalIndex = Math.floor(currentTime / 10); // Changes every 10 seconds
     const heroMovies = shuffledTrendingMovies.slice(0, 10); // Get first 10 movies from shuffled array
     const heroIndex = intervalIndex % heroMovies.length;
-    const heroMovie = heroMovies[heroIndex];
 
     return (
       <main className="bg-black">
-        <AutoRefresh />
         <Navbar />
 
         {/* Hero Section */}
         <HeroSection
-          movie={heroMovie}
-          totalItems={heroMovies.length}
-          currentIndex={heroIndex}
+          heroMovies={heroMovies}
+          initialIndex={heroIndex}
         />
 
         {/* Content Rows */}
