@@ -79,6 +79,9 @@ export function Navbar() {
                   </Badge>
                 )}
               </Link>
+              <Link href="/about" className="text-white hover:text-white/80 transition-colors">
+                Chi siamo
+              </Link>
             </div>
           </div>
 
@@ -185,6 +188,13 @@ export function Navbar() {
                     {myList.length > 9 ? '9+' : myList.length}
                   </Badge>
                 )}
+              </Link>
+              <Link
+                href="/about"
+                className="text-white hover:text-white/80 transition-colors py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Chi siamo
               </Link>
             </div>
           </div>
