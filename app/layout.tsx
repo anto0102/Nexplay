@@ -17,6 +17,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "NexPlay - Film e Serie TV in Streaming",
   description: "Guarda migliaia di film e serie TV in streaming. Scopri i contenuti più popolari e le ultime novità su NexPlay.",
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 };
 
 export default function RootLayout({

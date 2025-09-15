@@ -50,7 +50,7 @@ function MovieCard({ item, type }: MovieCardProps) {
 
   return (
     <div
-      className="group relative min-w-[150px] sm:min-w-[240px] md:min-w-[280px] cursor-pointer transition-all duration-300 hover:scale-105"
+      className="group relative min-w-[200px] sm:min-w-[240px] md:min-w-[280px] cursor-pointer transition-all duration-300 hover:scale-105"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsTouched(true)}

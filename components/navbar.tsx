@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { User, Menu, X, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -37,8 +38,15 @@ export function Navbar() {
         <div className="flex items-center justify-between gap-8">
           {/* Left Side - Logo + Navigation */}
           <div className="flex items-center space-x-8">
-            <Link href="/" className="text-red-600 font-bold text-2xl flex-shrink-0">
-              NEXPLAY
+            <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Nexplay"
+                width={40}
+                height={40}
+                className="w-8 h-8 sm:w-10 sm:h-10"
+              />
+              <span className="text-red-600 font-bold text-xl sm:text-2xl">NEXPLAY</span>
             </Link>
 
             {/* Navigation Links - Desktop */}
