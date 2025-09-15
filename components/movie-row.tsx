@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Play, Plus, Check, ThumbsUp } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Plus, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -113,9 +113,6 @@ function MovieCard({ item, type }: MovieCardProps) {
                   title={inMyList ? 'Rimuovi dalla mia lista' : 'Aggiungi alla mia lista'}
                 >
                   {inMyList ? <Check className="h-3 w-3 md:h-4 md:w-4" /> : <Plus className="h-3 w-3 md:h-4 md:w-4" />}
-                </Button>
-                <Button size="sm" variant="ghost" className="text-white hover:bg-white/20 h-6 w-6 sm:h-7 sm:w-7 md:h-9 md:w-auto p-1 md:px-3">
-                  <ThumbsUp className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
               </div>
             </div>
