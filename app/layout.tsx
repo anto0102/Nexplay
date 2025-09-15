@@ -38,7 +38,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              document.documentElement.style.setProperty('--banner-height', '48px');
+              document.documentElement.style.setProperty('--banner-height', '40px');
             `,
           }}
         />
