@@ -195,18 +195,6 @@ export function TVShowDetailsClient({ tvDetails, credits }: TVShowDetailsClientP
         </div>
       )}
 
-      {/* Simili Section */}
-      <div className="bg-black pb-20">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16">
-          <h2 className="text-2xl font-bold text-white mb-8">Simili a questo</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {/* Placeholder per serie simili - da implementare */}
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="aspect-video bg-gray-800 rounded-lg"></div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* Player Dialog */}
       <Dialog open={showPlayer} onOpenChange={setShowPlayer}>
