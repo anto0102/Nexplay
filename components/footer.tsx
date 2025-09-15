@@ -22,11 +22,11 @@ export function Footer() {
             <Image
               src="/logo.png"
               alt="NexPlay"
-              width={32}
-              height={32}
-              className="w-8 h-8"
+              width={48}
+              height={48}
+              className="w-10 h-10 sm:w-12 sm:h-12"
             />
-            <span className="text-red-600 font-bold text-lg">NEXPLAY</span>
+            <span className="text-red-600 font-bold text-xl sm:text-2xl">NEXPLAY</span>
           </div>
 
           {/* Telegram Channel */}
