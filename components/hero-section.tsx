@@ -91,6 +91,7 @@ export function HeroSection({ heroMovies, initialIndex }: HeroSectionProps) {
     <div
       ref={heroRef}
       className="relative h-[100vh] w-full overflow-hidden touch-pan-y"
+      style={{ marginTop: 'calc(var(--banner-height, 0px) + 80px)' }}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}

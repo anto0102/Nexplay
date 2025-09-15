@@ -44,6 +44,8 @@ export function AnnouncementBanner() {
     setIsVisible(false);
     setIsDismissed(true);
     sessionStorage.setItem('banner-dismissed', 'true');
+    // Force layout recalculation
+    document.documentElement.style.setProperty('--banner-height', '0px');
   };
 
   // Check sessionStorage on client side only
