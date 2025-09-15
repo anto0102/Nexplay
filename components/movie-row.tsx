@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Play, Plus, Check, ThumbsUp, ChevronDown } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Plus, Check, ThumbsUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -46,7 +46,7 @@ function MovieCard({ item, type }: MovieCardProps) {
 
   return (
     <div
-      className="group relative min-w-[280px] cursor-pointer transition-transform duration-300 hover:scale-105"
+      className="group relative min-w-[200px] sm:min-w-[240px] md:min-w-[280px] cursor-pointer transition-transform duration-300 hover:scale-105"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -83,38 +83,43 @@ function MovieCard({ item, type }: MovieCardProps) {
             </div>
           </div>
 
-          {/* Content on hover */}
+          {/* Content on hover - Hidden on mobile */}
           {isHovered && (
-            <div className="absolute inset-x-0 bottom-0 p-4 text-white bg-black/80 rounded-b-lg">
-              <h3 className="font-semibold text-lg mb-2 line-clamp-1">{title}</h3>
+            <div className="hidden sm:block absolute inset-x-0 bottom-0 p-3 md:p-4 text-white bg-black/80 rounded-b-lg">
+              <h3 className="font-semibold text-sm md:text-lg mb-2 line-clamp-1">{title}</h3>
 
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm text-white/80">{year}</span>
+                <span className="text-xs md:text-sm text-white/80">{year}</span>
                 <span className="text-xs px-2 py-1 bg-white/20 rounded">
                   {type === 'movie' ? 'FILM' : 'SERIE'}
                 </span>
               </div>
 
-              <div className="flex items-center gap-2" onClick={(e) => e.preventDefault()}>
-                <Button size="sm" className="bg-white text-black hover:bg-white/80">
-                  <Play className="h-4 w-4" />
+              <div className="flex items-center gap-1 md:gap-2" onClick={(e) => e.preventDefault()}>
+                <Button size="sm" className="bg-white text-black hover:bg-white/80 h-7 w-7 md:h-9 md:w-auto p-1 md:px-3">
+                  <Play className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
                 <Button
                   size="sm"
                   variant="ghost"
-                  className={`text-white hover:bg-white/20 ${inMyList ? 'bg-green-600/20' : ''}`}
+                  className={`text-white hover:bg-white/20 h-7 w-7 md:h-9 md:w-auto p-1 md:px-3 ${inMyList ? 'bg-green-600/20' : ''}`}
                   onClick={handleMyListClick}
                   title={inMyList ? 'Rimuovi dalla mia lista' : 'Aggiungi alla mia lista'}
                 >
-                  {inMyList ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                  {inMyList ? <Check className="h-3 w-3 md:h-4 md:w-4" /> : <Plus className="h-3 w-3 md:h-4 md:w-4" />}
                 </Button>
-                <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                  <ThumbsUp className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="ghost" className="text-white hover:bg-white/20 ml-auto">
-                  <ChevronDown className="h-4 w-4" />
+                <Button size="sm" variant="ghost" className="text-white hover:bg-white/20 h-7 w-7 md:h-9 md:w-auto p-1 md:px-3">
+                  <ThumbsUp className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
               </div>
+            </div>
+          )}
+
+          {/* Mobile overlay with just title */}
+          {isHovered && (
+            <div className="sm:hidden absolute inset-x-0 bottom-0 p-2 text-white bg-gradient-to-t from-black/90 to-transparent rounded-b-lg">
+              <h3 className="font-medium text-sm line-clamp-1">{title}</h3>
+              <span className="text-xs text-white/70">{year}</span>
             </div>
           )}
         </Card>
@@ -132,7 +137,7 @@ export function MovieRow({ title, items, type }: MovieRowProps) {
     const container = document.getElementById(`scroll-container-${title}`);
     if (!container) return;
 
-    const scrollAmount = 300;
+    const scrollAmount = window.innerWidth < 640 ? 200 : 300;
     const newPosition = direction === 'left'
       ? Math.max(0, scrollPosition - scrollAmount)
       : scrollPosition + scrollAmount;
@@ -183,7 +188,7 @@ export function MovieRow({ title, items, type }: MovieRowProps) {
         {/* Scrollable Container */}
         <div
           id={`scroll-container-${title}`}
-          className="flex gap-3 overflow-x-auto scrollbar-hide px-4 md:px-8 lg:px-16 pb-4"
+          className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide px-3 sm:px-4 md:px-8 lg:px-16 pb-4"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {items.map((item) => (
