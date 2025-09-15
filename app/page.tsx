@@ -2,6 +2,9 @@ import { Navbar } from '@/components/navbar';
 import { HeroSection } from '@/components/hero-section';
 import { MovieRow } from '@/components/movie-row';
 import { AutoRefresh } from '@/components/auto-refresh';
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
 import {
   getTrendingMovies,
   getPopularMovies,
