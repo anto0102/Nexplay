@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/navbar';
 import { HeroSection } from '@/components/hero-section';
 import { MovieRow } from '@/components/movie-row';
+import { AboutSection } from '@/components/about-section';
 
 // Force dynamic rendering to ensure fresh content on every refresh
 export const dynamic = 'force-dynamic';
@@ -222,6 +223,9 @@ export default async function Home() {
             items={shuffledAnimationMovies}
             type="movie"
           />
+
+          {/* Sezione Chi Siamo */}
+          <AboutSection />
         </div>
       </main>
     );
