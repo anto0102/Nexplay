@@ -29,7 +29,7 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+      className={`fixed top-[var(--banner-height,0px)] left-0 right-0 z-40 transition-colors duration-300 ${
         isScrolled ? 'bg-black/95 backdrop-blur-sm' : 'bg-transparent'
       }`}
       style={{ height: '80px', willChange: 'auto' }}

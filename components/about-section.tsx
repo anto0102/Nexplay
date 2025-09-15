@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 export function AboutSection() {
   return (
-    <section className="py-16 bg-gray-900/50">
+    <section className="py-16 bg-gray-900">
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
