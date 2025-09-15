@@ -19,12 +19,13 @@ export const metadata: Metadata = {
   description: "Guarda migliaia di film e serie TV in streaming. Scopri i contenuti più popolari e le ultime novità su NexPlay.",
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' },
-      { url: '/favicon.png', sizes: '256x256', type: 'image/png' },
+      { url: '/favicon.ico?v=3', sizes: '64x64', type: 'image/x-icon' },
+      { url: '/favicon.png?v=3', sizes: '256x256', type: 'image/png' },
     ],
-    shortcut: '/favicon.ico',
-    apple: '/favicon.png',
+    shortcut: '/favicon.ico?v=2',
+    apple: '/favicon.png?v=2',
   },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
