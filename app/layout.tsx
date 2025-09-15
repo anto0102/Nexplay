@@ -38,6 +38,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <MyListProvider>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                document.documentElement.style.setProperty('--banner-height', '48px');
+              `,
+            }}
+          />
           <LoadingBar />
           <AnnouncementBanner />
           {children}
