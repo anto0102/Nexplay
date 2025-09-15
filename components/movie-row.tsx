@@ -24,6 +24,7 @@ interface MovieCardProps {
 
 function MovieCard({ item, type }: MovieCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isTouched, setIsTouched] = useState(false);
   const { addToList, removeFromList, isInList } = useMyList();
 
   // For mixed content, determine type from media_type property
@@ -49,9 +50,11 @@ function MovieCard({ item, type }: MovieCardProps) {
 
   return (
     <div
-      className="group relative min-w-[200px] sm:min-w-[240px] md:min-w-[280px] cursor-pointer transition-transform duration-300 hover:scale-105"
+      className="group relative min-w-[150px] sm:min-w-[240px] md:min-w-[280px] cursor-pointer transition-all duration-300 hover:scale-105"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsTouched(true)}
+      onTouchEnd={() => setTimeout(() => setIsTouched(false), 3000)}
     >
       <Link href={detailsUrl}>
         <Card className="overflow-hidden border-0 bg-transparent">
@@ -64,13 +67,13 @@ function MovieCard({ item, type }: MovieCardProps) {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
 
-            {/* Simple overlay on hover */}
-            {isHovered && (
+            {/* Simple overlay on hover/touch */}
+            {(isHovered || isTouched) && (
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             )}
 
             {/* Play button */}
-            {isHovered && (
+            {(isHovered || isTouched) && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-white/90 rounded-full p-3 shadow-lg hover:bg-white transition-colors">
                   <Play className="h-6 w-6 text-black fill-black ml-0.5" />
@@ -86,45 +89,38 @@ function MovieCard({ item, type }: MovieCardProps) {
             </div>
           </div>
 
-          {/* Content on hover - Hidden on mobile */}
-          {isHovered && (
-            <div className="hidden sm:block absolute inset-x-0 bottom-0 p-3 md:p-4 text-white bg-black/80 rounded-b-lg">
-              <h3 className="font-semibold text-sm md:text-lg mb-2 line-clamp-1">{title}</h3>
+          {/* Content on hover/touch - Now visible on mobile when touched */}
+          {(isHovered || isTouched) && (
+            <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3 md:p-4 text-white bg-black/80 rounded-b-lg">
+              <h3 className="font-semibold text-xs sm:text-sm md:text-lg mb-1 sm:mb-2 line-clamp-1">{title}</h3>
 
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
                 <span className="text-xs md:text-sm text-white/80">{year}</span>
-                <span className="text-xs px-2 py-1 bg-white/20 rounded">
+                <span className="text-xs px-1 sm:px-2 py-1 bg-white/20 rounded">
                   {type === 'movie' ? 'FILM' : 'SERIE'}
                 </span>
               </div>
 
               <div className="flex items-center gap-1 md:gap-2" onClick={(e) => e.preventDefault()}>
-                <Button size="sm" className="bg-white text-black hover:bg-white/80 h-7 w-7 md:h-9 md:w-auto p-1 md:px-3">
+                <Button size="sm" className="bg-white text-black hover:bg-white/80 h-6 w-6 sm:h-7 sm:w-7 md:h-9 md:w-auto p-1 md:px-3">
                   <Play className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
                 <Button
                   size="sm"
                   variant="ghost"
-                  className={`text-white hover:bg-white/20 h-7 w-7 md:h-9 md:w-auto p-1 md:px-3 ${inMyList ? 'bg-green-600/20' : ''}`}
+                  className={`text-white hover:bg-white/20 h-6 w-6 sm:h-7 sm:w-7 md:h-9 md:w-auto p-1 md:px-3 ${inMyList ? 'bg-green-600/20' : ''}`}
                   onClick={handleMyListClick}
                   title={inMyList ? 'Rimuovi dalla mia lista' : 'Aggiungi alla mia lista'}
                 >
                   {inMyList ? <Check className="h-3 w-3 md:h-4 md:w-4" /> : <Plus className="h-3 w-3 md:h-4 md:w-4" />}
                 </Button>
-                <Button size="sm" variant="ghost" className="text-white hover:bg-white/20 h-7 w-7 md:h-9 md:w-auto p-1 md:px-3">
+                <Button size="sm" variant="ghost" className="text-white hover:bg-white/20 h-6 w-6 sm:h-7 sm:w-7 md:h-9 md:w-auto p-1 md:px-3">
                   <ThumbsUp className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
               </div>
             </div>
           )}
 
-          {/* Mobile overlay with just title */}
-          {isHovered && (
-            <div className="sm:hidden absolute inset-x-0 bottom-0 p-2 text-white bg-gradient-to-t from-black/90 to-transparent rounded-b-lg">
-              <h3 className="font-medium text-sm line-clamp-1">{title}</h3>
-              <span className="text-xs text-white/70">{year}</span>
-            </div>
-          )}
         </Card>
       </Link>
     </div>
