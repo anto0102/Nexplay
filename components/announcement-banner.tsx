@@ -46,7 +46,15 @@ export function AnnouncementBanner() {
     sessionStorage.setItem('banner-dismissed', 'true');
   };
 
-  // Don't render until hydrated to prevent flash
+  // Check sessionStorage on client side only
+  if (typeof window !== 'undefined') {
+    const dismissed = sessionStorage.getItem('banner-dismissed');
+    if (dismissed === 'true') {
+      return null;
+    }
+  }
+
+  // Don't render close button until hydrated
   if (!isHydrated) {
     return (
       <div className="bg-gradient-to-r from-red-600 to-red-500 text-white py-3 px-4 fixed top-0 left-0 right-0 z-50 shadow-lg">
