@@ -16,7 +16,7 @@ export function AnnouncementBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-gradient-to-r from-red-600 to-red-500 text-white py-2 px-3 fixed top-0 left-0 right-0 z-50 shadow-lg">
+    <div className="bg-gradient-to-r from-slate-800 to-slate-700 text-white py-2 px-3 fixed top-0 left-0 right-0 z-50 shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
         {/* Desktop version */}
         <div className="hidden sm:flex items-center justify-center text-center w-full">
@@ -29,7 +29,7 @@ export function AnnouncementBanner() {
               href="https://t.me/nexplayita"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-red-600 px-3 py-1 rounded-full text-xs font-semibold hover:bg-red-50 transition-colors ml-2"
+              className="bg-white text-slate-800 px-3 py-1 rounded-full text-xs font-semibold hover:bg-gray-100 transition-colors ml-2"
             >
               Unisciti ora
             </a>
@@ -52,7 +52,7 @@ export function AnnouncementBanner() {
               href="https://t.me/nexplayita"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-red-600 px-2 py-1 rounded-full text-xs font-semibold hover:bg-red-50 transition-colors"
+              className="bg-white text-slate-800 px-2 py-1 rounded-full text-xs font-semibold hover:bg-gray-100 transition-colors"
             >
               Unisciti
             </a>
