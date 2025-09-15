@@ -29,10 +29,14 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed top-[var(--banner-height,0px)] left-0 right-0 z-40 transition-colors duration-300 ${
+      className={`fixed left-0 right-0 z-40 transition-colors duration-300 ${
         isScrolled ? 'bg-black/95 backdrop-blur-sm' : 'bg-transparent'
       }`}
-      style={{ height: '80px', willChange: 'auto' }}
+      style={{
+        top: 'var(--banner-height, 0px)',
+        height: '80px',
+        willChange: 'auto'
+      }}
     >
       <div className="container mx-auto px-4 md:px-8 lg:px-16 py-4 h-full">
         <div className="flex items-center justify-between gap-8">

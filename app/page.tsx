@@ -116,7 +116,7 @@ export default async function Home() {
     const heroIndex = intervalIndex % heroMovies.length;
 
     return (
-      <main className="bg-black">
+      <main className="bg-black" style={{ paddingTop: 'calc(var(--banner-height, 0px) + 80px)' }}>
         <Navbar />
 
         {/* Hero Section */}

@@ -90,7 +90,7 @@ export function HeroSection({ heroMovies, initialIndex }: HeroSectionProps) {
   return (
     <div
       ref={heroRef}
-      className="relative h-[calc(100vh-var(--banner-height,0px))] w-full overflow-hidden touch-pan-y mt-[var(--banner-height,0px)]"
+      className="relative h-[100vh] w-full overflow-hidden touch-pan-y"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
