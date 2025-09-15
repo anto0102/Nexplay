@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Heart, MessageCircle } from 'lucide-react';
 
 export function Footer() {
@@ -18,12 +19,14 @@ export function Footer() {
 
           {/* Center - Logo */}
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-red-600 rounded-lg">
-              <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                <div className="w-3 h-3 bg-red-600 rounded-full"></div>
-              </div>
-            </div>
-            <span className="text-white font-bold text-lg">NexPlay</span>
+            <Image
+              src="/logo.png"
+              alt="NexPlay"
+              width={32}
+              height={32}
+              className="w-8 h-8"
+            />
+            <span className="text-red-600 font-bold text-lg">NEXPLAY</span>
           </div>
 
           {/* Telegram Channel */}
@@ -45,7 +48,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-6 pt-4 border-t border-white/5 text-center">
           <p className="text-white/50 text-xs">
-            © 2024 NexPlay. Tutti i diritti riservati.
+            © 2025 NexPlay. Tutti i diritti riservati.
           </p>
         </div>
       </div>
