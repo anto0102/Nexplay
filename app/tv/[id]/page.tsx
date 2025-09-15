@@ -27,9 +27,10 @@ async function TVContent({ id }: { id: string }) {
       getTVShowDetails(tvId),
       getTVShowCredits(tvId),
       getTVShowVideos(tvId),
-      getTVShowRecommendations(tvId),
-      getSimilarTVShows(tvId),
+      getTVShowRecommendations(tvId).catch(() => ({ results: [] })),
+      getSimilarTVShows(tvId).catch(() => ({ results: [] })),
     ]);
+
 
     return (
       <>
@@ -40,7 +41,7 @@ async function TVContent({ id }: { id: string }) {
 
         {/* Recommendations */}
         <div className="bg-black pb-20">
-          {recommendations.results.length > 0 && (
+          {recommendations?.results?.length > 0 && (
             <MovieRow
               title="Serie TV consigliate"
               items={recommendations.results}
@@ -48,7 +49,7 @@ async function TVContent({ id }: { id: string }) {
             />
           )}
 
-          {similar.results.length > 0 && (
+          {similar?.results?.length > 0 && (
             <MovieRow
               title="Serie TV simili"
               items={similar.results}

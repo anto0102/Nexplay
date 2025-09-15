@@ -27,9 +27,10 @@ async function MovieContent({ id }: { id: string }) {
       getMovieDetails(movieId),
       getMovieCredits(movieId),
       getMovieVideos(movieId),
-      getMovieRecommendations(movieId),
-      getSimilarMovies(movieId),
+      getMovieRecommendations(movieId).catch(() => ({ results: [] })),
+      getSimilarMovies(movieId).catch(() => ({ results: [] })),
     ]);
+
 
     return (
       <>
