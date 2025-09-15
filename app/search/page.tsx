@@ -11,7 +11,10 @@ interface SearchPageProps {
 async function SearchResults({ query }: { query: string }) {
   if (!query || query.length < 2) {
     return (
-      <div className="bg-black min-h-screen pt-32 pb-20">
+      <div
+        className="bg-black min-h-screen pb-20"
+        style={{ paddingTop: 'calc(var(--banner-height, 0px) + 120px)' }}
+      >
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-white mb-4">Cerca contenuti</h1>
@@ -31,7 +34,10 @@ async function SearchResults({ query }: { query: string }) {
     const tvShows = searchResults.results.filter(item => item.media_type === 'tv');
 
     return (
-      <div className="bg-black min-h-screen pt-32 pb-20">
+      <div
+        className="bg-black min-h-screen pb-20"
+        style={{ paddingTop: 'calc(var(--banner-height, 0px) + 120px)' }}
+      >
         <div className="container mx-auto px-4 md:px-8 lg:px-16 mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">
             Risultati per &quot;{query}&quot;
@@ -74,7 +80,10 @@ async function SearchResults({ query }: { query: string }) {
   } catch (error) {
     console.error('Error searching:', error);
     return (
-      <div className="bg-black min-h-screen pt-32 pb-20 flex items-center justify-center">
+      <div
+      className="bg-black min-h-screen pb-20 flex items-center justify-center"
+      style={{ paddingTop: 'calc(var(--banner-height, 0px) + 120px)' }}
+    >
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Errore nella ricerca</h1>
           <p className="text-white/70">
@@ -88,7 +97,10 @@ async function SearchResults({ query }: { query: string }) {
 
 function SearchSkeleton() {
   return (
-    <div className="bg-black min-h-screen pt-32 pb-20">
+    <div
+      className="bg-black min-h-screen pb-20"
+      style={{ paddingTop: 'calc(var(--banner-height, 0px) + 120px)' }}
+    >
       <div className="container mx-auto px-4 md:px-8 lg:px-16 mb-8">
         <Skeleton className="h-10 w-64 bg-gray-800 mb-2" />
         <Skeleton className="h-6 w-48 bg-gray-800" />

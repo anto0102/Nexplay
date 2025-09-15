@@ -18,7 +18,10 @@ export default async function MoviesPage() {
       <main className="bg-black min-h-screen">
         <Navbar />
 
-        <div className="pt-20 pb-20 px-4 md:px-8 lg:px-16">
+        <div
+          className="pb-20 px-4 md:px-8 lg:px-16"
+          style={{ paddingTop: 'calc(var(--banner-height, 0px) + 80px)' }}
+        >
           <h1 className="text-white text-4xl font-bold mb-8">Film</h1>
 
           <MovieRow
