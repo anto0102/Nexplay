@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { VideoPlayer } from '@/components/video-player';
 import { Dialog, DialogContent, VisuallyHidden, DialogTitle } from '@/components/ui/dialog';
 import { useMyList } from '@/contexts/my-list-context';
+import { ShareButton } from '@/components/share-button';
 import { Play, Plus, Check, Info } from 'lucide-react';
 import { getImageUrl, getBackdropUrl } from '@/lib/tmdb';
 import type { MovieDetails, Credits } from '@/lib/types';
@@ -21,9 +22,10 @@ export function MovieDetailsClient({ movieDetails, credits }: MovieDetailsClient
   const [showPlayer, setShowPlayer] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
-
-
   const inMyList = isInList(movieDetails.id, 'movie');
+
+  // Generate share URL
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://nexplay.it/movie/${movieDetails.id}`;
 
   const handleMyListClick = () => {
     if (inMyList) {
@@ -133,11 +135,11 @@ export function MovieDetailsClient({ movieDetails, credits }: MovieDetailsClient
                   )}
                 </button>
 
-                <button className="w-12 h-12 rounded-full border-2 border-white/60 hover:border-white bg-transparent hover:bg-white/10 transition-colors flex items-center justify-center">
-                  <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8zM8.5 16l3.5-2.5 3.5 2.5L12 18.5 8.5 16z"/>
-                  </svg>
-                </button>
+                <ShareButton
+                  url={shareUrl}
+                  title={movieDetails.title}
+                  description={movieDetails.overview}
+                />
               </div>
             </div>
           </div>

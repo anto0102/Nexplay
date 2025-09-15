@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import { Navbar } from '@/components/navbar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MovieRow } from '@/components/movie-row';
@@ -11,9 +12,63 @@ import {
   getMovieRecommendations,
   getSimilarMovies,
 } from '@/lib/tmdb';
+import { getImageUrl, getBackdropUrl } from '@/lib/tmdb';
 
 interface MoviePageProps {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: MoviePageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const movieId = parseInt(resolvedParams.id);
+
+  if (isNaN(movieId)) {
+    return {
+      title: 'Film non trovato - NexPlay',
+    };
+  }
+
+  try {
+    const movieDetails = await getMovieDetails(movieId);
+    const posterUrl = getImageUrl(movieDetails.poster_path, 'w500');
+    const backdropUrl = getBackdropUrl(movieDetails.backdrop_path, 'w1280');
+
+    return {
+      title: `${movieDetails.title} - NexPlay`,
+      description: movieDetails.overview || `Guarda ${movieDetails.title} in streaming su NexPlay`,
+      openGraph: {
+        title: `${movieDetails.title} - NexPlay`,
+        description: movieDetails.overview || `Guarda ${movieDetails.title} in streaming su NexPlay`,
+        images: [
+          {
+            url: backdropUrl,
+            width: 1280,
+            height: 720,
+            alt: movieDetails.title,
+          },
+          {
+            url: posterUrl,
+            width: 500,
+            height: 750,
+            alt: movieDetails.title,
+          },
+        ],
+        type: 'video.movie',
+        siteName: 'NexPlay',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${movieDetails.title} - NexPlay`,
+        description: movieDetails.overview || `Guarda ${movieDetails.title} in streaming su NexPlay`,
+        images: [backdropUrl],
+      },
+    };
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    return {
+      title: 'Film - NexPlay',
+    };
+  }
 }
 
 async function MovieContent({ id }: { id: string }) {

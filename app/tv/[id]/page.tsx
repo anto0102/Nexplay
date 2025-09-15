@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import { Navbar } from '@/components/navbar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MovieRow } from '@/components/movie-row';
@@ -11,9 +12,63 @@ import {
   getTVShowRecommendations,
   getSimilarTVShows,
 } from '@/lib/tmdb';
+import { getImageUrl, getBackdropUrl } from '@/lib/tmdb';
 
 interface TVPageProps {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: TVPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const tvId = parseInt(resolvedParams.id);
+
+  if (isNaN(tvId)) {
+    return {
+      title: 'Serie TV non trovata - NexPlay',
+    };
+  }
+
+  try {
+    const tvDetails = await getTVShowDetails(tvId);
+    const posterUrl = getImageUrl(tvDetails.poster_path, 'w500');
+    const backdropUrl = getBackdropUrl(tvDetails.backdrop_path, 'w1280');
+
+    return {
+      title: `${tvDetails.name} - NexPlay`,
+      description: tvDetails.overview || `Guarda ${tvDetails.name} in streaming su NexPlay`,
+      openGraph: {
+        title: `${tvDetails.name} - NexPlay`,
+        description: tvDetails.overview || `Guarda ${tvDetails.name} in streaming su NexPlay`,
+        images: [
+          {
+            url: backdropUrl,
+            width: 1280,
+            height: 720,
+            alt: tvDetails.name,
+          },
+          {
+            url: posterUrl,
+            width: 500,
+            height: 750,
+            alt: tvDetails.name,
+          },
+        ],
+        type: 'video.tv_show',
+        siteName: 'NexPlay',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${tvDetails.name} - NexPlay`,
+        description: tvDetails.overview || `Guarda ${tvDetails.name} in streaming su NexPlay`,
+        images: [backdropUrl],
+      },
+    };
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    return {
+      title: 'Serie TV - NexPlay',
+    };
+  }
 }
 
 async function TVContent({ id }: { id: string }) {
