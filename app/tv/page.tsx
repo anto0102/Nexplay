@@ -18,7 +18,7 @@ export default async function TVPage() {
         <Navbar />
 
         <div
-          className="pb-20 px-4 md:px-8 lg:px-16"
+          className="px-4 md:px-8 lg:px-16"
           style={{ paddingTop: 'calc(var(--banner-height, 0px) + 80px)' }}
         >
           <h1 className="text-white text-4xl font-bold mb-8">Serie TV</h1>

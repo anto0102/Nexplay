@@ -125,7 +125,7 @@ export default async function Home() {
         />
 
         {/* Content Rows */}
-        <div className="bg-black min-h-screen pb-20 pt-10">
+        <div className="bg-black min-h-screen pt-10">
           <MovieRow
             title="Tendenze del momento"
             items={shuffledTrendingMovies.slice(10, 30)} // Skip first 10 used for hero

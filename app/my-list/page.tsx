@@ -18,7 +18,6 @@ export default function MyListPage() {
     <main className="bg-black min-h-screen">
       <Navbar />
       <div
-        className="pb-20"
         style={{ paddingTop: 'calc(var(--banner-height, 0px) + 80px)' }}
       >
         <div className="container mx-auto px-4 md:px-8 lg:px-16">

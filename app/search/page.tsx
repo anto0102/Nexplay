@@ -12,7 +12,7 @@ async function SearchResults({ query }: { query: string }) {
   if (!query || query.length < 2) {
     return (
       <div
-        className="bg-black min-h-screen pb-20"
+        className="bg-black min-h-screen"
         style={{ paddingTop: 'calc(var(--banner-height, 0px) + 120px)' }}
       >
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
@@ -35,7 +35,7 @@ async function SearchResults({ query }: { query: string }) {
 
     return (
       <div
-        className="bg-black min-h-screen pb-20"
+        className="bg-black min-h-screen"
         style={{ paddingTop: 'calc(var(--banner-height, 0px) + 120px)' }}
       >
         <div className="container mx-auto px-4 md:px-8 lg:px-16 mb-8">
@@ -81,7 +81,7 @@ async function SearchResults({ query }: { query: string }) {
     console.error('Error searching:', error);
     return (
       <div
-      className="bg-black min-h-screen pb-20 flex items-center justify-center"
+      className="bg-black min-h-screen flex items-center justify-center"
       style={{ paddingTop: 'calc(var(--banner-height, 0px) + 120px)' }}
     >
         <div className="text-center">
