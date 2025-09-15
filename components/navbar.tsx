@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Bell, User, Menu, X } from 'lucide-react';
+import { Bell, User, Menu, X, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { SearchBar } from '@/components/search-bar';
@@ -11,6 +11,7 @@ import { useMyList } from '@/contexts/my-list-context';
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const { myList } = useMyList();
 
   useEffect(() => {
@@ -71,12 +72,28 @@ export function Navbar() {
 
           {/* Right Side */}
           <div className="flex items-center space-x-4">
+            {/* Mobile Search Icon */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:text-white/80 md:hidden"
+              onClick={() => {
+                setIsMobileSearchOpen(!isMobileSearchOpen);
+                setIsMobileMenuOpen(false);
+              }}
+            >
+              <Search className="h-5 w-5" />
+            </Button>
+
             {/* Mobile menu toggle */}
             <Button
               variant="ghost"
               size="icon"
               className="text-white hover:text-white/80 md:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => {
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+                setIsMobileSearchOpen(false);
+              }}
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -101,16 +118,20 @@ export function Navbar() {
           </div>
         </div>
 
+        {/* Mobile Search Bar */}
+        <div className={`md:hidden transition-all duration-300 ${
+          isMobileSearchOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0 overflow-hidden'
+        }`}>
+          <div className="bg-black/80 backdrop-blur-sm rounded-lg border border-white/20 p-4">
+            <SearchBar />
+          </div>
+        </div>
+
         {/* Mobile Navigation */}
         <div className={`md:hidden transition-all duration-300 overflow-hidden ${
           isMobileMenuOpen ? 'max-h-96 opacity-100 mt-6' : 'max-h-0 opacity-0'
         }`}>
           <div className="bg-black/80 backdrop-blur-sm rounded-lg border border-white/20 p-4 space-y-4">
-            {/* Mobile Search */}
-            <div className="mb-4">
-              <SearchBar />
-            </div>
-
             {/* Mobile Links */}
             <div className="flex flex-col space-y-3">
               <Link

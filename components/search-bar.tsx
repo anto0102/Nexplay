@@ -43,8 +43,10 @@ export function SearchBar({ className = '' }: SearchBarProps) {
           const filteredResults = searchResults.results
             .filter((item) => item.media_type !== 'person')
             .slice(0, 8);
+          console.log('Filtered results:', filteredResults);
           setResults(filteredResults);
           setShowResults(true);
+          console.log('showResults set to true');
         } else {
           console.warn('Invalid search results format:', searchResults);
           setResults([]);
@@ -146,7 +148,7 @@ export function SearchBar({ className = '' }: SearchBarProps) {
 
       {/* Search Results Dropdown */}
       {showResults && (results.length > 0 || isLoading) && (
-        <Card className="absolute top-full left-0 right-0 mt-2 bg-black/90 border-white/20 backdrop-blur-xl max-h-96 overflow-y-auto z-50">
+        <Card className="absolute top-full left-0 right-0 mt-2 bg-black/90 border-white/20 backdrop-blur-xl max-h-96 overflow-y-auto z-[60]">
           {isLoading ? (
             <div className="p-4 text-center text-white/60">
               Ricerca in corso...

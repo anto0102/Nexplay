@@ -12,7 +12,6 @@ This is a Netflix-style streaming platform built with Next.js 15.5.3, React 19.1
 - `npm run build` - Build for production with Turbopack
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint
-- `npm run typecheck` - Run TypeScript type checking (if available)
 
 ## Architecture
 
@@ -82,6 +81,8 @@ This is a Netflix-style streaming platform built with Next.js 15.5.3, React 19.1
 - `components/movie-details-client.tsx` - Movie detail page content
 - `components/tv-details-client.tsx` - TV show detail page content
 - `components/video-player.tsx` - VixSrc streaming player integration
+- `components/episode-carousel.tsx` - TV show episode selection carousel
+- `components/loading-bar.tsx` - Universal loading progress bar using NProgress
 
 ### Context & State
 - `contexts/my-list-context.tsx` - Global state for "My List" functionality
@@ -89,6 +90,7 @@ This is a Netflix-style streaming platform built with Next.js 15.5.3, React 19.1
 ### API & Data
 - `lib/tmdb.ts` - TMDB API integration with error handling and mock data
 - `lib/types.ts` - TypeScript interfaces for TMDB API responses
+- `lib/utils.ts` - Utility functions including CSS class merging (cn function)
 
 ### UI Components (shadcn/ui)
 - `components/ui/button.tsx` - Customizable button component
@@ -97,15 +99,28 @@ This is a Netflix-style streaming platform built with Next.js 15.5.3, React 19.1
 - `components/ui/dialog.tsx` - Modal dialogs (enhanced for accessibility)
 - `components/ui/input.tsx` - Form input fields
 - `components/ui/skeleton.tsx` - Loading state placeholders
+- `components/ui/scroll-area.tsx` - Custom scrollable area component
 
 ## Technical Specifications
 
+### Dependencies & Packages
+- **Core**: Next.js 15.5.3, React 19.1.0, TypeScript 5
+- **UI Framework**: Tailwind CSS v4 with PostCSS support
+- **UI Components**: Radix UI primitives (@radix-ui/react-dialog, @radix-ui/react-scroll-area, @radix-ui/react-slot)
+- **Styling Utilities**: class-variance-authority, clsx, tailwind-merge, tw-animate-css
+- **Icons**: Lucide React (v0.544.0)
+- **Progress Indicators**: NProgress (v0.2.0) with custom styling
+- **Development**: ESLint with Next.js config, TypeScript definitions for all packages
+
 ### Performance Optimizations
-- Removed heavy CSS animations and effects
+- Removed heavy CSS animations and effects (retained selective hover effects)
 - Optimized image loading with Next.js Image component
 - Debounced search (300ms) to reduce API calls
 - Lazy loading for improved initial page load
 - Efficient state management to prevent unnecessary re-renders
+- Universal loading bar using NProgress for smooth navigation feedback
+- CSS-only line clamps for text truncation (line-clamp-1, line-clamp-2, line-clamp-3)
+- Custom scrollbar hiding utilities for clean UI
 
 ### Accessibility Features
 - Screen reader support with VisuallyHidden titles
@@ -144,6 +159,13 @@ This is a Netflix-style streaming platform built with Next.js 15.5.3, React 19.1
 - Search history and query parameter handling
 - Performance optimized with debouncing
 
+### Episode Management
+- Interactive episode carousel for TV shows (`components/episode-carousel.tsx`)
+- Season selection with visual indicators
+- Episode thumbnails with hover effects and play buttons
+- Direct episode selection for streaming
+- Episode metadata display (title, description, air date)
+
 ### Video Streaming
 - VixSrc integration for movie/TV playback
 - Custom player theming to match Netflix aesthetic
@@ -155,3 +177,10 @@ This is a Netflix-style streaming platform built with Next.js 15.5.3, React 19.1
 - Automatic state hydration on app load
 - Cross-session persistence of user preferences
 - Efficient data serialization and deserialization
+
+### Navigation Enhancement
+- Universal loading bar with NProgress integration
+- Custom red gradient loading bar matching Netflix theme
+- Smooth transitions between pages
+- Progress indication for both page navigation and route changes
+- Configurable loading speed and animation settings

@@ -4,10 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Play, Info } from 'lucide-react';
+import { Play, Info, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getBackdropUrl } from '@/lib/tmdb';
 import type { Movie } from '@/lib/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 interface HeroSectionProps {
   heroMovies: Movie[];
@@ -17,9 +17,53 @@ interface HeroSectionProps {
 export function HeroSection({ heroMovies, initialIndex }: HeroSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [progress, setProgress] = useState(0);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const currentMovie = heroMovies[currentIndex];
   const backdropUrl = getBackdropUrl(currentMovie.backdrop_path, 'original');
+
+  // Swipe detection
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goToNext();
+    } else if (isRightSwipe) {
+      goToPrevious();
+    }
+  };
+
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % heroMovies.length);
+    setProgress(0);
+  }, [heroMovies.length]);
+
+  const goToPrevious = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + heroMovies.length) % heroMovies.length);
+    setProgress(0);
+  }, [heroMovies.length]);
+
+  const goToSlide = useCallback((index: number) => {
+    setCurrentIndex(index);
+    setProgress(0);
+  }, []);
 
   useEffect(() => {
     setProgress(0);
@@ -34,18 +78,23 @@ export function HeroSection({ heroMovies, initialIndex }: HeroSectionProps) {
     }, 100); // Update every 100ms to reach 100% in 10 seconds
 
     const heroInterval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % heroMovies.length);
-      setProgress(0);
+      goToNext();
     }, 10000); // Change hero every 10 seconds
 
     return () => {
       clearInterval(progressInterval);
       clearInterval(heroInterval);
     };
-  }, [heroMovies.length]);
+  }, [heroMovies.length, goToNext]);
 
   return (
-    <div className="relative h-[100vh] w-full overflow-hidden">
+    <div
+      ref={heroRef}
+      className="relative h-[100vh] w-full overflow-hidden touch-pan-y"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -61,6 +110,29 @@ export function HeroSection({ heroMovies, initialIndex }: HeroSectionProps) {
       {/* Gradients overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10" />
+
+      {/* Desktop Navigation Arrows */}
+      <div className="hidden md:block">
+        {/* Previous Arrow */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-black/20 hover:bg-black/40 text-white/70 hover:text-white transition-all duration-300 h-12 w-12 rounded-full"
+          onClick={goToPrevious}
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </Button>
+
+        {/* Next Arrow */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-black/20 hover:bg-black/40 text-white/70 hover:text-white transition-all duration-300 h-12 w-12 rounded-full"
+          onClick={goToNext}
+        >
+          <ChevronRight className="h-6 w-6" />
+        </Button>
+      </div>
 
       {/* Content */}
       <div className="absolute inset-0 flex items-center z-20">
@@ -128,13 +200,15 @@ export function HeroSection({ heroMovies, initialIndex }: HeroSectionProps) {
           {/* Dots */}
           <div className="flex gap-2">
             {Array.from({ length: heroMovies.length }, (_, i) => (
-              <div
+              <button
                 key={i}
-                className={`h-2 rounded-full transition-all duration-300 ${
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                   i === currentIndex
                     ? 'w-8 bg-white'
                     : 'w-2 bg-white/40 hover:bg-white/60'
                 }`}
+                onClick={() => goToSlide(i)}
+                aria-label={`Vai al film ${i + 1}`}
               />
             ))}
           </div>

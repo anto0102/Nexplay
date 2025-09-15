@@ -14,33 +14,36 @@ import type { Movie, TVShow, SearchResultItem } from '@/lib/types';
 interface MovieRowProps {
   title: string;
   items: (Movie | TVShow | SearchResultItem)[];
-  type: 'movie' | 'tv';
+  type: 'movie' | 'tv' | 'mixed';
 }
 
 interface MovieCardProps {
   item: Movie | TVShow | SearchResultItem;
-  type: 'movie' | 'tv';
+  type: 'movie' | 'tv' | 'mixed';
 }
 
 function MovieCard({ item, type }: MovieCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const { addToList, removeFromList, isInList } = useMyList();
 
-  const title = type === 'movie' ? (item as Movie).title : (item as TVShow).name;
-  const releaseDate = type === 'movie' ? (item as Movie).release_date : (item as TVShow).first_air_date;
-  const year = releaseDate ? new Date(releaseDate).getFullYear() : '';
-  const detailsUrl = type === 'movie' ? `/movie/${item.id}` : `/tv/${item.id}`;
+  // For mixed content, determine type from media_type property
+  const itemType = type === 'mixed' ? (item as any).media_type || 'movie' : type;
 
-  const inMyList = isInList(item.id, type);
+  const title = itemType === 'movie' ? (item as Movie).title : (item as TVShow).name;
+  const releaseDate = itemType === 'movie' ? (item as Movie).release_date : (item as TVShow).first_air_date;
+  const year = releaseDate ? new Date(releaseDate).getFullYear() : '';
+  const detailsUrl = itemType === 'movie' ? `/movie/${item.id}` : `/tv/${item.id}`;
+
+  const inMyList = isInList(item.id, itemType);
 
   const handleMyListClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     if (inMyList) {
-      removeFromList(item.id, type);
+      removeFromList(item.id, itemType);
     } else {
-      addToList(item as Movie | TVShow, type);
+      addToList(item as Movie | TVShow, itemType);
     }
   };
 
