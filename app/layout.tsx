@@ -34,22 +34,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const dismissed = sessionStorage.getItem('banner-dismissed');
+                  if (dismissed === 'true') {
+                    document.documentElement.style.setProperty('--banner-height', '0px');
+                  } else {
+                    document.documentElement.style.setProperty('--banner-height', '48px');
+                  }
+                } catch (e) {
+                  document.documentElement.style.setProperty('--banner-height', '48px');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <MyListProvider>
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                const dismissed = sessionStorage.getItem('banner-dismissed');
-                if (dismissed === 'true') {
-                  document.documentElement.style.setProperty('--banner-height', '0px');
-                } else {
-                  document.documentElement.style.setProperty('--banner-height', '48px');
-                }
-              `,
-            }}
-          />
           <LoadingBar />
           <AnnouncementBanner />
           {children}
