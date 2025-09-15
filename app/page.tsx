@@ -5,6 +5,16 @@ import { AutoRefresh } from '@/components/auto-refresh';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
+
+// Shuffle function for randomizing content order
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
 import {
   getTrendingMovies,
   getPopularMovies,
@@ -33,10 +43,18 @@ export default async function Home() {
       getTopRatedTVShows(),
     ]);
 
+    // Shuffle all content arrays for fresh order on each refresh
+    const shuffledTrendingMovies = shuffleArray(trendingMovies.results);
+    const shuffledPopularMovies = shuffleArray(popularMovies.results);
+    const shuffledTopRatedMovies = shuffleArray(topRatedMovies.results);
+    const shuffledTrendingTVShows = shuffleArray(trendingTVShows.results);
+    const shuffledPopularTVShows = shuffleArray(popularTVShows.results);
+    const shuffledTopRatedTVShows = shuffleArray(topRatedTVShows.results);
+
     // Get hero movie based on current time (changes every 10 seconds)
     const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
     const intervalIndex = Math.floor(currentTime / 10); // Changes every 10 seconds
-    const heroMovies = trendingMovies.results.slice(0, 10); // Get first 10 movies
+    const heroMovies = shuffledTrendingMovies.slice(0, 10); // Get first 10 movies from shuffled array
     const heroIndex = intervalIndex % heroMovies.length;
     const heroMovie = heroMovies[heroIndex];
 
@@ -56,37 +74,37 @@ export default async function Home() {
         <div className="bg-black min-h-screen pb-20 pt-10">
           <MovieRow
             title="Tendenze del momento"
-            items={trendingMovies.results.slice(1, 20)}
+            items={shuffledTrendingMovies.slice(10, 30)} // Skip first 10 used for hero
             type="movie"
           />
 
           <MovieRow
             title="Serie TV di tendenza"
-            items={trendingTVShows.results}
+            items={shuffledTrendingTVShows}
             type="tv"
           />
 
           <MovieRow
             title="Film popolari"
-            items={popularMovies.results}
+            items={shuffledPopularMovies}
             type="movie"
           />
 
           <MovieRow
             title="Serie TV popolari"
-            items={popularTVShows.results}
+            items={shuffledPopularTVShows}
             type="tv"
           />
 
           <MovieRow
             title="Film più votati"
-            items={topRatedMovies.results}
+            items={shuffledTopRatedMovies}
             type="movie"
           />
 
           <MovieRow
             title="Serie TV più votate"
-            items={topRatedTVShows.results}
+            items={shuffledTopRatedTVShows}
             type="tv"
           />
         </div>
