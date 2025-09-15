@@ -38,18 +38,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              (function() {
-                try {
-                  const dismissed = sessionStorage.getItem('banner-dismissed');
-                  if (dismissed === 'true') {
-                    document.documentElement.style.setProperty('--banner-height', '0px');
-                  } else {
-                    document.documentElement.style.setProperty('--banner-height', '48px');
-                  }
-                } catch (e) {
-                  document.documentElement.style.setProperty('--banner-height', '48px');
-                }
-              })();
+              document.documentElement.style.setProperty('--banner-height', '48px');
             `,
           }}
         />
