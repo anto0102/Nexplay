@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Bell, User, Menu, X, Search } from 'lucide-react';
+import { User, Menu, X, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { SearchBar } from '@/components/search-bar';
 import { useMyList } from '@/contexts/my-list-context';
 
@@ -12,7 +13,9 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const { myList } = useMyList();
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,11 +28,12 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
         isScrolled ? 'bg-black/95 backdrop-blur-sm' : 'bg-transparent'
       }`}
+      style={{ height: '80px', willChange: 'auto' }}
     >
-      <div className="container mx-auto px-4 md:px-8 lg:px-16 py-4">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16 py-4 h-full">
         <div className="flex items-center justify-between gap-8">
           {/* Left Side - Logo + Navigation */}
           <div className="flex items-center space-x-8">
@@ -98,20 +102,12 @@ export function Navbar() {
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
 
-            {/* Notifications */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-white hover:text-white/80 hidden sm:flex"
-            >
-              <Bell className="h-5 w-5" />
-            </Button>
-
             {/* Profile */}
             <Button
               variant="ghost"
               size="icon"
               className="text-white hover:text-white/80"
+              onClick={() => setIsAccountModalOpen(true)}
             >
               <User className="h-5 w-5" />
             </Button>
@@ -181,6 +177,28 @@ export function Navbar() {
           </div>
         </div>
       </div>
+
+      {/* Account Modal */}
+      <Dialog open={isAccountModalOpen} onOpenChange={setIsAccountModalOpen}>
+        <DialogContent className="bg-black border-white/20 text-white">
+          <DialogHeader>
+            <DialogTitle className="text-center text-xl font-bold">
+              Account
+            </DialogTitle>
+          </DialogHeader>
+          <div className="text-center py-8">
+            <div className="mb-4">
+              <User className="h-16 w-16 mx-auto text-white/60" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2">
+              Funzione in arrivo
+            </h3>
+            <p className="text-white/70">
+              Sto lavorando per portarti presto la gestione completa dell'account.
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </nav>
   );
 }

@@ -11,6 +11,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Optimizations for SSR and performance
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  // Enable static optimization
+  trailingSlash: false,
 };
 
 export default nextConfig;

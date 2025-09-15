@@ -25,6 +25,7 @@ export function TVShowDetailsClient({ tvDetails, credits }: TVShowDetailsClientP
   const [showInfo, setShowInfo] = useState(false);
 
 
+
   const inMyList = isInList(tvDetails.id, 'tv');
 
   const handleMyListClick = () => {

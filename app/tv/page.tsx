@@ -2,6 +2,9 @@ import { Navbar } from '@/components/navbar';
 import { MovieRow } from '@/components/movie-row';
 import { getPopularTVShows, getTopRatedTVShows, getTrendingTVShows } from '@/lib/tmdb';
 
+// Enable static generation for better performance
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function TVPage() {
   try {
     const [popularTVShows, topRatedTVShows, trendingTVShows] = await Promise.all([

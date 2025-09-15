@@ -22,6 +22,7 @@ export function MovieDetailsClient({ movieDetails, credits }: MovieDetailsClient
   const [showInfo, setShowInfo] = useState(false);
 
 
+
   const inMyList = isInList(movieDetails.id, 'movie');
 
   const handleMyListClick = () => {

@@ -2,6 +2,9 @@ import { Navbar } from '@/components/navbar';
 import { MovieRow } from '@/components/movie-row';
 import { getPopularMovies, getTopRatedMovies, getTrendingMovies, getUpcomingMovies } from '@/lib/tmdb';
 
+// Enable static generation for better performance
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function MoviesPage() {
   try {
     const [popularMovies, topRatedMovies, trendingMovies, upcomingMovies] = await Promise.all([
