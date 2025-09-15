@@ -105,8 +105,8 @@ export function ShareButton({ url, title, description }: ShareButtonProps) {
             {/* Close button */}
             <Button
               onClick={() => setShowModal(false)}
-              variant="outline"
-              className="w-full border-white/20 text-white hover:bg-white/10"
+              variant="secondary"
+              className="w-full bg-white/10 text-white hover:bg-white/20 border-0"
             >
               Chiudi
             </Button>
