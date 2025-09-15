@@ -42,9 +42,10 @@ export function Navbar() {
               <Image
                 src="/logo.png"
                 alt="Nexplay"
-                width={40}
-                height={40}
-                className="w-8 h-8 sm:w-10 sm:h-10"
+                width={64}
+                height={64}
+                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16"
+                priority
               />
               <span className="text-red-600 font-bold text-xl sm:text-2xl">NEXPLAY</span>
             </Link>
