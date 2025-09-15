@@ -23,7 +23,7 @@ async function MovieContent({ id }: { id: string }) {
       notFound();
     }
 
-    const [movieDetails, credits, videos, recommendations, similar] = await Promise.all([
+    const [movieDetails, credits, , recommendations, similar] = await Promise.all([
       getMovieDetails(movieId),
       getMovieCredits(movieId),
       getMovieVideos(movieId),
@@ -36,7 +36,6 @@ async function MovieContent({ id }: { id: string }) {
         <MovieDetailsClient
           movieDetails={movieDetails}
           credits={credits}
-          videos={videos}
         />
 
         {/* Recommendations */}

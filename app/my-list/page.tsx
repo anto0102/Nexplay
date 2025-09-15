@@ -3,9 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Navbar } from '@/components/navbar';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { useMyList } from '@/contexts/my-list-context';
 import { getImageUrl } from '@/lib/tmdb';
 import { Heart, Plus, Play, Trash2 } from 'lucide-react';

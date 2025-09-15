@@ -7,13 +7,29 @@ import { Badge } from '@/components/ui/badge';
 import { Play, Info } from 'lucide-react';
 import { getBackdropUrl } from '@/lib/tmdb';
 import type { Movie } from '@/lib/types';
+import { useEffect, useState } from 'react';
 
 interface HeroSectionProps {
   movie: Movie;
+  totalItems: number;
+  currentIndex: number;
 }
 
-export function HeroSection({ movie }: HeroSectionProps) {
+export function HeroSection({ movie, totalItems, currentIndex }: HeroSectionProps) {
   const backdropUrl = getBackdropUrl(movie.backdrop_path, 'original');
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    setProgress(0);
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) return 0;
+        return prev + 1;
+      });
+    }, 100); // Update every 100ms to reach 100% in 10 seconds
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   return (
     <div className="relative h-[100vh] w-full overflow-hidden">
@@ -89,6 +105,35 @@ export function HeroSection({ movie }: HeroSectionProps) {
                 </Button>
               </Link>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Carousel Indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30">
+        <div className="flex items-center gap-3">
+          {/* Dots */}
+          <div className="flex gap-2">
+            {Array.from({ length: totalItems }, (_, i) => (
+              <div
+                key={i}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  i === currentIndex
+                    ? 'w-8 bg-white'
+                    : 'w-2 bg-white/40 hover:bg-white/60'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="mt-3 w-20 mx-auto">
+          <div className="h-1 bg-white/20 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-red-600 rounded-full transition-all duration-100"
+              style={{ width: `${progress}%` }}
+            />
           </div>
         </div>
       </div>

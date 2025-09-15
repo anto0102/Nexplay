@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/navbar';
 import { HeroSection } from '@/components/hero-section';
 import { MovieRow } from '@/components/movie-row';
+import { AutoRefresh } from '@/components/auto-refresh';
 import {
   getTrendingMovies,
   getPopularMovies,
@@ -29,15 +30,24 @@ export default async function Home() {
       getTopRatedTVShows(),
     ]);
 
-    // Get random hero movie from trending
-    const heroMovie = trendingMovies.results[Math.floor(Math.random() * Math.min(trendingMovies.results.length, 10))];
+    // Get hero movie based on current time (changes every 10 seconds)
+    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+    const intervalIndex = Math.floor(currentTime / 10); // Changes every 10 seconds
+    const heroMovies = trendingMovies.results.slice(0, 10); // Get first 10 movies
+    const heroIndex = intervalIndex % heroMovies.length;
+    const heroMovie = heroMovies[heroIndex];
 
     return (
       <main className="bg-black">
+        <AutoRefresh />
         <Navbar />
 
         {/* Hero Section */}
-        <HeroSection movie={heroMovie} />
+        <HeroSection
+          movie={heroMovie}
+          totalItems={heroMovies.length}
+          currentIndex={heroIndex}
+        />
 
         {/* Content Rows */}
         <div className="bg-black min-h-screen pb-20 pt-10">

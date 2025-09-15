@@ -23,7 +23,7 @@ async function TVContent({ id }: { id: string }) {
       notFound();
     }
 
-    const [tvDetails, credits, videos, recommendations, similar] = await Promise.all([
+    const [tvDetails, credits, , recommendations, similar] = await Promise.all([
       getTVShowDetails(tvId),
       getTVShowCredits(tvId),
       getTVShowVideos(tvId),
@@ -36,7 +36,6 @@ async function TVContent({ id }: { id: string }) {
         <TVShowDetailsClient
           tvDetails={tvDetails}
           credits={credits}
-          videos={videos}
         />
 
         {/* Recommendations */}
