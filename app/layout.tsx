@@ -4,6 +4,7 @@ import { MyListProvider } from "@/contexts/my-list-context";
 import LoadingBar from "@/components/loading-bar";
 import { AnnouncementBanner } from "@/components/announcement-banner";
 import { Footer } from "@/components/footer";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -53,6 +54,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </MyListProvider>
+        <Analytics />
       </body>
     </html>
   );

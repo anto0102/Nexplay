@@ -1,11 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Play, Info, ChevronLeft, ChevronRight } from 'lucide-react';
-import { getBackdropUrl } from '@/lib/tmdb';
+import { OptimizedImage } from '@/components/optimized-image';
 import type { Movie } from '@/lib/types';
 import { useEffect, useState, useRef, useCallback } from 'react';
 
@@ -22,7 +21,6 @@ export function HeroSection({ heroMovies, initialIndex }: HeroSectionProps) {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const currentMovie = heroMovies[currentIndex];
-  const backdropUrl = getBackdropUrl(currentMovie.backdrop_path, 'original');
 
   // Swipe detection
   const minSwipeDistance = 50;
@@ -98,13 +96,12 @@ export function HeroSection({ heroMovies, initialIndex }: HeroSectionProps) {
     >
       {/* Background Image */}
       <div className="absolute inset-0">
-        <Image
-          src={backdropUrl}
+        <OptimizedImage
+          src={currentMovie.backdrop_path}
           alt={currentMovie.title}
-          fill
-          className="object-cover"
+          type="backdrop"
+          className="w-full h-full"
           priority
-          sizes="100vw"
         />
       </div>
 

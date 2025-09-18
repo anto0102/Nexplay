@@ -242,7 +242,7 @@ export async function searchMulti(query: string): Promise<TMDBResponse<SearchRes
   return fetchFromTMDB(`/search/multi?query=${encodedQuery}`);
 }
 
-// Utility functions
+// Utility functions with optimized sizes for responsive design
 export function getImageUrl(path: string | null, size: string = 'w500'): string {
   if (!path) {
     // Return a data URI for a simple placeholder
@@ -257,4 +257,45 @@ export function getBackdropUrl(path: string | null, size: string = 'w1280'): str
     return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIHZpZXdCb3g9IjAgMCAxMjgwIDcyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIGZpbGw9IiMxMTExMTEiLz48cGF0aCBkPSJNNTAwIDI4MEw3MjAgMzYwTDUwMCA0NDBWMjgwWiIgZmlsbD0iIzQ0NDQ0NCIvPjx0ZXh0IHg9IjY0MCIgeT0iNDIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2NjY2IiBmb250LXNpemU9IjI0IiBmb250LWZhbWlseT0iQXJpYWwiPkltbWFnaW5lIG5vbiBkaXNwb25pYmlsZTwvdGV4dD48L3N2Zz4=';
   }
   return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
+}
+
+// Optimized function for responsive images - returns appropriate sizes based on viewport
+export function getOptimizedImageUrl(path: string | null, type: 'poster' | 'backdrop' = 'poster'): {
+  src: string;
+  srcset: string;
+  sizes: string;
+} {
+  if (!path) {
+    const placeholder = type === 'poster'
+      ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9Ijc1MCIgdmlld0JveD0iMCAwIDUwMCA3NTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSI3NTAiIGZpbGw9IiMxMTExMTEiLz48cGF0aCBkPSJNMjAwIDMwMEwzMDAgMzc1TDIwMCA0NTBWMzAwWiIgZmlsbD0iIzY2NjY2NiIvPjx0ZXh0IHg9IjI1MCIgeT0iNTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2NjY2IiBmb250LXNpemU9IjE4IiBmb250LWZhbWlseT0iQXJpYWwiPkltbWFnaW5lIG5vbiBkaXNwb25pYmlsZTwvdGV4dD48L3N2Zz4='
+      : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIHZpZXdCb3g9IjAgMCAxMjgwIDcyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIGZpbGw9IiMxMTExMTEiLz48cGF0aCBkPSJNNTAwIDI4MEw3MjAgMzYwTDUwMCA0NDBWMjgwWiIgZmlsbD0iIzQ0NDQ0NCIvPjx0ZXh0IHg9IjY0MCIgeT0iNDIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2NjY2IiBmb250LXNpemU9IjI0IiBmb250LWZhbWlseT0iQXJpYWwiPkltbWFnaW5lIG5vbiBkaXNwb25pYmlsZTwvdGV4dD48L3N2Zz4=';
+
+    return {
+      src: placeholder,
+      srcset: placeholder,
+      sizes: '100vw'
+    };
+  }
+
+  if (type === 'poster') {
+    return {
+      src: `${TMDB_IMAGE_BASE_URL}/w342${path}`,
+      srcset: [
+        `${TMDB_IMAGE_BASE_URL}/w185${path} 185w`,
+        `${TMDB_IMAGE_BASE_URL}/w342${path} 342w`,
+        `${TMDB_IMAGE_BASE_URL}/w500${path} 500w`
+      ].join(', '),
+      sizes: '(max-width: 640px) 185px, (max-width: 1024px) 342px, 500px'
+    };
+  } else {
+    return {
+      src: `${TMDB_IMAGE_BASE_URL}/w780${path}`,
+      srcset: [
+        `${TMDB_IMAGE_BASE_URL}/w300${path} 300w`,
+        `${TMDB_IMAGE_BASE_URL}/w780${path} 780w`,
+        `${TMDB_IMAGE_BASE_URL}/w1280${path} 1280w`
+      ].join(', '),
+      sizes: '(max-width: 768px) 300px, (max-width: 1200px) 780px, 1280px'
+    };
+  }
 }

@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
-import { getImageUrl } from '@/lib/tmdb';
+import { OptimizedImage } from '@/components/optimized-image';
 
 interface Episode {
   id: number;
@@ -154,12 +153,11 @@ export function EpisodeCarousel({
                       {/* Episode Image */}
                       <div className="aspect-video bg-gray-800 rounded overflow-hidden relative">
                         {episode.still_path ? (
-                          <Image
-                            src={getImageUrl(episode.still_path, 'w500')}
+                          <OptimizedImage
+                            src={episode.still_path}
                             alt={episode.name}
-                            width={288}
-                            height={162}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            type="backdrop"
+                            className="w-full h-full group-hover:scale-105 transition-transform duration-300"
                           />
                         ) : (
                           <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">

@@ -2,12 +2,12 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { searchMulti, getImageUrl } from '@/lib/tmdb';
+import { searchMulti } from '@/lib/tmdb';
+import { OptimizedImage } from '@/components/optimized-image';
 import type { SearchResultItem } from '@/lib/types';
 
 interface SearchBarProps {
@@ -162,12 +162,11 @@ export function SearchBar({ className = '' }: SearchBarProps) {
                   onClick={() => handleResultClick(result)}
                 >
                   <div className="flex-shrink-0 w-12 h-16 rounded overflow-hidden bg-gray-800">
-                    <Image
-                      src={getImageUrl(result.poster_path || result.profile_path || null, 'w154')}
+                    <OptimizedImage
+                      src={result.poster_path || result.profile_path || null}
                       alt={getTitle(result)}
-                      width={48}
-                      height={64}
-                      className="object-cover w-full h-full"
+                      type="poster"
+                      className="w-full h-full"
                     />
                   </div>
 
