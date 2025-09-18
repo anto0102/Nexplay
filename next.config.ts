@@ -2,20 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'image.tmdb.org',
-        port: '',
-        pathname: '/t/p/**',
-      },
-    ],
-    // Minimize transformations: only essential sizes and formats
-    formats: ['image/webp'],
-    deviceSizes: [640, 828, 1200],
-    imageSizes: [128, 256, 384],
-    minimumCacheTTL: 3600, // Cache for 1 hour
-    dangerouslyAllowSVG: false,
+    // Disable Vercel image optimization completely to avoid 402 errors
+    unoptimized: true,
   },
   // Optimizations for SSR and performance
   experimental: {

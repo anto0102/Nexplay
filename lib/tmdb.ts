@@ -242,15 +242,15 @@ export async function searchMulti(query: string): Promise<TMDBResponse<SearchRes
   return fetchFromTMDB(`/search/multi?query=${encodedQuery}`);
 }
 
-// Smart image function - uses fixed TMDB sizes to reduce Vercel transformations
+// Smart image function - uses proxy API to avoid CORS and reduce Vercel transformations
 export function getImageUrl(path: string | null, context: 'mobile' | 'desktop' | 'hero' = 'desktop'): string {
   if (!path) {
     return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9Ijc1MCIgdmlld0JveD0iMCAwIDUwMCA3NTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSI3NTAiIGZpbGw9IiMxMTExMTEiLz48cGF0aCBkPSJNMjAwIDMwMEwzMDAgMzc1TDIwMCA0NTBWMzAwWiIgZmlsbD0iIzY2NjY2NiIvPjx0ZXh0IHg9IjI1MCIgeT0iNTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2NjY2IiBmb250LXNpemU9IjE4IiBmb250LWZhbWlseT0iQXJpYWwiPkltbWFnaW5lIG5vbiBkaXNwb25pYmlsZTwvdGV4dD48L3N2Zz4=';
   }
 
-  // Use fixed TMDB sizes to minimize Vercel processing
+  // Use proxy API with fixed TMDB sizes to minimize Vercel processing
   const size = context === 'hero' ? 'w1280' : context === 'mobile' ? 'w342' : 'w500';
-  return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
+  return `/api/image?path=${encodeURIComponent(path)}&size=${size}`;
 }
 
 // Backward compatibility - keep the old function working
@@ -266,9 +266,9 @@ export function getBackdropUrl(path: string | null, context: 'mobile' | 'desktop
     return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIHZpZXdCb3g9IjAgMCAxMjgwIDcyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIGZpbGw9IiMxMTExMTEiLz48cGF0aCBkPSJNNTAwIDI4MEw3MjAgMzYwTDUwMCA0NDBWMjgwWiIgZmlsbD0iIzQ0NDQ0NCIvPjx0ZXh0IHg9IjY0MCIgeT0iNDIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2NjY2IiBmb250LXNpemU9IjI0IiBmb250LWZhbWlseT0iQXJpYWwiPkltbWFnaW5lIG5vbiBkaXNwb25pYmlsZTwvdGV4dD48L3N2Zz4=';
   }
 
-  // Fixed sizes to reduce transformations: only 3 sizes instead of dynamic scaling
+  // Use proxy API to bypass Vercel image transformations completely
   const size = context === 'hero' ? 'w1280' : context === 'mobile' ? 'w780' : 'w780';
-  return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
+  return `/api/image?path=${encodeURIComponent(path)}&size=${size}`;
 }
 
 // Optimized function for responsive images - returns appropriate sizes based on viewport
