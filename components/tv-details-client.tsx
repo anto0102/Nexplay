@@ -57,7 +57,7 @@ export function TVShowDetailsClient({ tvDetails, credits }: TVShowDetailsClientP
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src={getBackdropUrl(tvDetails.backdrop_path, 'original')}
+            src={getBackdropUrl(tvDetails.backdrop_path, 'hero')}
             alt={tvDetails.name}
             fill
             className="object-cover"
@@ -178,7 +178,7 @@ export function TVShowDetailsClient({ tvDetails, credits }: TVShowDetailsClientP
                 <div key={actor.id} className="text-center">
                   <div className="aspect-square bg-gray-800 rounded-lg overflow-hidden mb-3">
                     <Image
-                      src={getImageUrl(actor.profile_path, 'w185')}
+                      src={getImageUrl(actor.profile_path, 'mobile')}
                       alt={actor.name}
                       width={150}
                       height={150}

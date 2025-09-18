@@ -66,7 +66,7 @@ export default function MyListPage() {
                       {/* Poster Container */}
                       <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-900/50 backdrop-blur-sm border border-white/5 group-hover:border-white/20 transition-all duration-300">
                         <Image
-                          src={getImageUrl(item.poster_path, 'w342')}
+                          src={getImageUrl(item.poster_path, 'desktop')}
                           alt={title}
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-110"

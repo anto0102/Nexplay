@@ -2,12 +2,20 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // Keep optimization only for local images, disable for TMDB
-    formats: ['image/webp', 'image/avif'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Remove TMDB from remotePatterns to prevent Next.js optimization
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'image.tmdb.org',
+        port: '',
+        pathname: '/t/p/**',
+      },
+    ],
+    // Minimize transformations: only essential sizes and formats
+    formats: ['image/webp'],
+    deviceSizes: [640, 828, 1200],
+    imageSizes: [128, 256, 384],
+    minimumCacheTTL: 3600, // Cache for 1 hour
+    dangerouslyAllowSVG: false,
   },
   // Optimizations for SSR and performance
   experimental: {

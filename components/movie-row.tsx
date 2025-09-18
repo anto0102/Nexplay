@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Play, Plus, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useMyList } from '@/contexts/my-list-context';
-import { OptimizedImage } from '@/components/optimized-image';
+import { getImageUrl } from '@/lib/tmdb';
 import type { Movie, TVShow, SearchResultItem } from '@/lib/types';
 
 interface MovieRowProps {
@@ -58,11 +59,13 @@ function MovieCard({ item, type }: MovieCardProps) {
       <Link href={detailsUrl}>
         <Card className="overflow-hidden border-0 bg-transparent">
           <div className="relative aspect-[16/9] rounded-lg overflow-hidden">
-            <OptimizedImage
-              src={item.backdrop_path}
+            <Image
+              src={getImageUrl(item.backdrop_path, 'desktop')}
               alt={title}
-              type="backdrop"
-              className="w-full h-full transition-opacity duration-300"
+              fill
+              className="object-cover transition-opacity duration-300"
+              sizes="(max-width: 768px) 342px, 500px"
+              quality={80}
             />
 
             {/* Simple overlay on hover/touch */}

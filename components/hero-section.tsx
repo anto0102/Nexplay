@@ -1,10 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Play, Info, ChevronLeft, ChevronRight } from 'lucide-react';
-import { OptimizedImage } from '@/components/optimized-image';
+import { getBackdropUrl } from '@/lib/tmdb';
 import type { Movie } from '@/lib/types';
 import { useEffect, useState, useRef, useCallback } from 'react';
 
@@ -96,12 +97,14 @@ export function HeroSection({ heroMovies, initialIndex }: HeroSectionProps) {
     >
       {/* Background Image */}
       <div className="absolute inset-0">
-        <OptimizedImage
-          src={currentMovie.backdrop_path}
+        <Image
+          src={getBackdropUrl(currentMovie.backdrop_path, 'hero')}
           alt={currentMovie.title}
-          type="backdrop"
-          className="w-full h-full"
+          fill
+          className="object-cover"
           priority
+          sizes="100vw"
+          quality={85}
         />
       </div>
 

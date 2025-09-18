@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: TVPageProps): Promise<Metadat
 
   try {
     const tvDetails = await getTVShowDetails(tvId);
-    const posterUrl = getImageUrl(tvDetails.poster_path, 'w500');
-    const backdropUrl = getBackdropUrl(tvDetails.backdrop_path, 'w1280');
+    const posterUrl = getImageUrl(tvDetails.poster_path, 'desktop');
+    const backdropUrl = getBackdropUrl(tvDetails.backdrop_path, 'hero');
 
     return {
       title: `${tvDetails.name} - NexPlay`,

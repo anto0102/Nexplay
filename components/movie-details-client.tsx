@@ -46,7 +46,7 @@ export function MovieDetailsClient({ movieDetails, credits }: MovieDetailsClient
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src={getBackdropUrl(movieDetails.backdrop_path, 'original')}
+            src={getBackdropUrl(movieDetails.backdrop_path, 'hero')}
             alt={movieDetails.title}
             fill
             className="object-cover"
@@ -156,7 +156,7 @@ export function MovieDetailsClient({ movieDetails, credits }: MovieDetailsClient
                 <div key={actor.id} className="text-center">
                   <div className="aspect-square bg-gray-800 rounded-lg overflow-hidden mb-3">
                     <Image
-                      src={getImageUrl(actor.profile_path, 'w185')}
+                      src={getImageUrl(actor.profile_path, 'mobile')}
                       alt={actor.name}
                       width={150}
                       height={150}
