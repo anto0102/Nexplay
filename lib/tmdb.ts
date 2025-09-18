@@ -253,6 +253,14 @@ export function getImageUrl(path: string | null, context: 'mobile' | 'desktop' |
   return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
 }
 
+// Backward compatibility - keep the old function working
+export function getImageUrlLegacy(path: string | null, size: string = 'w500'): string {
+  if (!path) {
+    return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9Ijc1MCIgdmlld0JveD0iMCAwIDUwMCA3NTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSI3NTAiIGZpbGw9IiMxMTExMTEiLz48cGF0aCBkPSJNMjAwIDMwMEwzMDAgMzc1TDIwMCA0NTBWMzAwWiIgZmlsbD0iIzY2NjY2NiIvPjx0ZXh0IHg9IjI1MCIgeT0iNTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2NjY2IiBmb250LXNpemU9IjE4IiBmb250LWZhbWlseT0iQXJpYWwiPkltbWFnaW5lIG5vbiBkaXNwb25pYmlsZTwvdGV4dD48L3N2Zz4=';
+  }
+  return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
+}
+
 export function getBackdropUrl(path: string | null, context: 'mobile' | 'desktop' | 'hero' = 'hero'): string {
   if (!path) {
     return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIHZpZXdCb3g9IjAgMCAxMjgwIDcyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIGZpbGw9IiMxMTExMTEiLz48cGF0aCBkPSJNNTAwIDI4MEw3MjAgMzYwTDUwMCA0NDBWMjgwWiIgZmlsbD0iIzQ0NDQ0NCIvPjx0ZXh0IHg9IjY0MCIgeT0iNDIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjY2NjY2IiBmb250LXNpemU9IjI0IiBmb250LWZhbWlseT0iQXJpYWwiPkltbWFnaW5lIG5vbiBkaXNwb25pYmlsZTwvdGV4dD48L3N2Zz4=';
